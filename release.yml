@@ -1,0 +1,62 @@
+name: release
+
+# Push a tag "vX.Y.Z" (matching meteorrx/__init__.py __version__) to build the Windows package
+# and publish it as a GitHub Release. Optional code signing: secrets SIGN_PFX_BASE64 / SIGN_PFX_PASSWORD.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      CI: "1"
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Version check
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $v = (Select-String -Path meteorrx/__init__.py -Pattern '__version__ = "(.*)"').Matches[0].Groups[1].Value
+          if ("v$v" -ne "${{ github.ref_name }}") { Write-Error "tag ${{ github.ref_name }} does not match __version__ $v"; exit 1 }
+      - name: Tests
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pytest -q tests
+      - name: Optional code-signing certificate
+        env:
+          SIGN_PFX_BASE64: ${{ secrets.SIGN_PFX_BASE64 }}
+        shell: pwsh
+        run: |
+          if (-not $env:SIGN_PFX_BASE64) { Write-Host 'no certificate configured'; exit 0 }
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\sign.pfx", [Convert]::FromBase64String($env:SIGN_PFX_BASE64))
+          "METEORRX_SIGN_PFX=$env:RUNNER_TEMP\sign.pfx" >> $env:GITHUB_ENV
+      - name: Build MeteorRX.exe (bootloader compiled from source with MSVC, drivers SHA-256 checked)
+        shell: cmd
+        env:
+          METEORRX_SIGN_PASSWORD: ${{ secrets.SIGN_PFX_PASSWORD }}
+        run: build_exe.bat
+      - name: Source package
+        shell: pwsh
+        run: git archive --format=zip -o "dist/MeteorRX-$($env:GITHUB_REF_NAME.TrimStart('v'))-src.zip" HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MeteorRX-win64
+          path: dist/MeteorRX-*.zip
+      - name: GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MeteorRX ${{ github.ref_name }}
+          body: |
+            Windows 10/11 x64: download **MeteorRX-*-win64.zip**, unzip anywhere, run `MeteorRX.exe`.
+            See the [user manual](docs/MANUAL.md) and the [changelog](CHANGELOG.md).
+          files: dist/MeteorRX-*.zip

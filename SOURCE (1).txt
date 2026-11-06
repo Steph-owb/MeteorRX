@@ -1,0 +1,5 @@
+zadig.exe - Zadig 2.9 (libwdi v1.5.1), USB driver installer by Pete Batard / Akeo Consulting
+Source : https://github.com/pbatard/libwdi  (tag v1.5.1)
+Binary : https://github.com/pbatard/libwdi/releases/download/v1.5.1/zadig-2.9.exe
+SHA-256: 4ecaa95df3da3621486a043aef8b3050b8bafe7c901402871e816229ef82039b
+Licence: GNU GPL v3. Digitally signed by Akeo Consulting.

@@ -1,0 +1,5 @@
+rtlsdr.dll - RTL-SDR Blog driver library, release v1.3.6 (x64)
+Source : https://github.com/rtlsdrblog/rtl-sdr-blog  (tag v1.3.6)
+Binary : https://github.com/rtlsdrblog/rtl-sdr-blog/releases/download/v1.3.6/Release.zip
+SHA-256: 9805b8c6195d12c43e670ea99462a62814e5953dfa8b3f113e3c9c702b0e5b54
+Licence: GNU GPL v2 or later. The complete corresponding source code is available at the URL above.

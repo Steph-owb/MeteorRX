@@ -1,0 +1,8 @@
+# Runtime - versions pinned to the set validated with the test-suite and the frozen build
+numpy==1.26.4
+numba==0.60.0
+llvmlite==0.43.0
+PySide6-Essentials==6.7.3
+shiboken6==6.7.3
+sgp4==2.27
+certifi>=2024.8.30

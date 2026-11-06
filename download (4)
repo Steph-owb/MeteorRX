@@ -1,0 +1,33 @@
+# Python / build
+.venv/
+.venv-build/
+build/
+dist/
+__pycache__/
+*.pyc
+*.spec.bak
+
+# runtime data (created next to the exe or when running from source). Anchored to the root on purpose:
+# an unanchored "data/" would also swallow meteorrx/data/, the bundled map-overlay and font data.
+/cache/
+/data/
+_keep/
+_keep_data/
+
+# IQ recordings and packages
+*.cs8
+*.cs16
+*.cu8
+*.cf32
+*.cadu
+*.zip
+
+# third-party driver binaries are fetched (and hash-checked) by tools/fetch_drivers.py
+drivers/rtlsdr/rtlsdr.dll
+drivers/zadig/zadig.exe
+
+# pre-1.3 C core and entry points (obsolete, not part of the project)
+bin/
+core/
+main.py
+cli_main.py
