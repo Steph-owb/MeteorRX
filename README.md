@@ -12,7 +12,7 @@ Self-contained: `MeteorRX.exe` + `meteorrx.ini` + a working RTL-SDR driver set.
 **Download:** the Windows package `MeteorRX-x.y.z-win64.zip` is on the **Releases** page.
 **User manual:** [docs/MANUAL.md](docs/MANUAL.md) — short, practical, English with a French summary.
 
-*Written by Stephan **9H2WB / F5OWB** for the **Malta Amateur Radio League (MARL)**. Free software, GPL-3.0.*
+*Written by Stephan **9H2WB / F5OWB** . Free software, GPL-3.0.*
 * Many thanks for the long hours of testing to Anthony "Tony" Musumeci IK1HGI who has been a great partner on this project
 * And a warm thank you to all the OMs who have been running after our successive versions — downloading, reinstalling and reporting back pass after pass. Your logs are what found most of what is fixed here. May this one stay put for a while.
 
